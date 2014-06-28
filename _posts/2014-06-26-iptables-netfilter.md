@@ -62,16 +62,16 @@ iptables是一个工作于用户空间的防火墙应用软件，允许系统管
 7.    进入 mangle 表的 INPUT 链，这里是在路由之后，交由本地主机之前，我们也可以进行一些相应的修改。
 8.    进入 filter 表的 INPUT 链，在这里我们可以对流入的所有数据包进行过滤，无论它来自哪个网络接口。
 9.    交给本地主机的应用程序进行处理。
-10.    处理完毕后进行路由决定，看该往那里发出。
-11.    进入 raw 表的 OUTPUT 链，这里是在连接跟踪处理本地的数据包之前。
-12.    连接跟踪对本地的数据包进行处理。
-13.    进入 mangle 表的 OUTPUT 链，在这里我们可以修改数据包，但不要做过滤。
-14.    进入 nat 表的 OUTPUT 链，可以对防火墙自己发出的数据做 NAT 。
-15.    再次进行路由决定。
-16.    进入 filter 表的 OUTPUT 链，可以对本地出去的数据包进行过滤。
-17.    进入 mangle 表的 POSTROUTING链，同上一种情况的第9步。注意，这里不光对经过防火墙的数据包进行处理，还对防火墙自己产生的数据包进行处理。
-18.    进入 nat 表的 POSTROUTING 链，同上一种情况的第10步。
-19.    进入出去的网络接口。完毕。
+10.   处理完毕后进行路由决定，看该往那里发出。
+11.   进入 raw 表的 OUTPUT 链，这里是在连接跟踪处理本地的数据包之前。
+12.   连接跟踪对本地的数据包进行处理。
+13.   进入 mangle 表的 OUTPUT 链，在这里我们可以修改数据包，但不要做过滤。
+14.   进入 nat 表的 OUTPUT 链，可以对防火墙自己发出的数据做 NAT 。
+15.   再次进行路由决定。
+16.   进入 filter 表的 OUTPUT 链，可以对本地出去的数据包进行过滤。
+17.   进入 mangle 表的 POSTROUTING链，同上一种情况的第9步。注意，这里不光对经过防火墙的数据包进行处理，还对防火墙自己产生的数据包进行处理。
+18.   进入 nat 表的 POSTROUTING 链，同上一种情况的第10步。
+19.   进入出去的网络接口。完毕。
 
 用一张图总结上面的所有的步骤：
 ![](/images/network/iptables_traverse.jpg)
@@ -313,8 +313,8 @@ static unsigned int test_hook(unsigned int hooknum, struct sk_buff *skb,
 **注：**
 ----------
 
-* 学习使用iptables：http://wangcong.org/articles/learning-iptables.cn.html
-* Netfilter实现机制分析：http://bbs.chinaunix.net/thread-2008344-1-1.html
-* 自己写Netfilter匹配器：http://www.linuxfocus.org/ChineseGB/February2005/article367.shtml
-* linux-2.6.35.6 xtables&iptables&hipac：http://bbs.chinaunix.net/thread-3749229-1-1.html
+* [学习使用iptables](http://wangcong.org/articles/learning-iptables.cn.html)
+* [Netfilter实现机制分析](http://bbs.chinaunix.net/thread-2008344-1-1.html)
+* [自己写Netfilter匹配器](http://www.linuxfocus.org/ChineseGB/February2005/article367.shtml)
+* [linux-2.6.35.6 xtables&iptables&hipac](http://bbs.chinaunix.net/thread-3749229-1-1.html)
 
