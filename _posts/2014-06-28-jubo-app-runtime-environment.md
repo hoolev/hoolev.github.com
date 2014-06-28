@@ -3,7 +3,7 @@ layout: post
 title: JuBo应用运行环境 
 categories: JuBo
 tags: 
-    - JuBo 
+    - WiFi 
     - Meteor
 ---
 
