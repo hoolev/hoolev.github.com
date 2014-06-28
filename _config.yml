@@ -7,7 +7,7 @@ permalink:        pretty
 
 # Setup
 title:            Hoolev 
-tagline:          'WiFi, Network, Coding'
+tagline:          'Linux, Network, Coding'
 description:      '<a href="http://weibo.com/hoolev" target="_blank">@hoolev</a>关注<a href="/category/#WiFi">WiFi</a>，<a href="/category/#Linux">Linux</a>以及<a ref="/category/#Meteor">Meteor</a>。'
 baseurl:          '/'
 paginate:         5
