@@ -74,20 +74,24 @@ select RALINK_DEV_GPIO_LEDS
 **编辑`trunk/target/linux/ramips/files/arch/mips/ralink/rt305x/Makefile`**
 
 在obj-$(CONFIG_RT305X_MACH_FREESTATION5)上面增加:
+
 `obj-$(CONFIG_RT305X_MACH_HG255D) += mach-hg255d.o`
 
 **编辑`trunk/target/linux/ramips/rt305x/config-3.3`**
 
 在CONFIG_RT305X_MACH_FREESTATION5=y上面增加:
+
 `CONFIG_RT305X_MACH_HG255D=y`
 
 **编辑`trunk/target/linux/ramips/files/arch/mips/include/asm/mach-ralink/machine.h`**
 
 在RAMIPS_MACH_FREESTATION5, /* ARC Freestation5 */上面增加:
+
 `RAMIPS_MACH_HG255D, /* HuaWei HG255D */`
 
 **编辑`trunk/target/linux/ramips/files/arch/mips/include/asm/mach-ralink/rt305x_regs.h`**
 将#define RT305X_FLASH0_SIZE (8 * 1024 * 1024)修改成为
+
 `#define RT305X_FLASH0_SIZE (16 * 1024 * 1024)`
 
 ###开始编译
