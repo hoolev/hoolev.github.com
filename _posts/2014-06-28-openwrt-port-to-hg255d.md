@@ -1,9 +1,9 @@
 ---
 layout: post
 title: 移植openwrt到HG255D 
-categories: JuBo
+categories: WiFi
 tags: 
-    - WiFi 
+    - JuBo 
 ---
 OpenWrt是一个嵌入式的 Linux 发行版，OpenWrt不是一个单一、静态的固件，而是提供了一个可添加软件包的可写的文件系统。
 >交叉编译的主机是Ubuntu
