@@ -37,3 +37,7 @@ img {
   left: -2.5em;
 }
 }
+
+.pull-right {
+  float: right !important;
+}
