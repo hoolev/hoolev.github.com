@@ -1,10 +1,9 @@
 ---
 layout: post
 title: JuBo应用运行环境 
-categories: JuBo
+categories: Meteor
 tags: 
-    - WiFi 
-    - Meteor
+    - JuBo
 ---
 
 JuBo应用的运行环境是一个全新的、实时的、完整的web应用开发部署平台。
