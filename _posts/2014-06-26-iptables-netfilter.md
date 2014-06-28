@@ -93,9 +93,10 @@ ipt_entry_matchs由多个xt_entry_match组成。
 在`ipt_entry`中还保存有与遍历规则相关的变量`target_offset`和`next_offset`，通过`target_offset`可以找到规则中`xt_entry_target`的位置，通过`next_offset`可以找到下一条规则的位置。
 ![](images/network/rules_storage.jpg)
 
-函数ipt_do_table()实现了规则的遍历，该函数根据传入的参数table和hook找到相应的规则起点，即第一个ipt_entry的位置。
-标准匹配通过函数ipt_packet_match()来实现，该函数主要对报文的五元组信息进行匹配，扩展匹配通过宏xt_ematch_foreach来实现。
-在对数据包进行匹配后，接着通过函数ipt_get_target()获取规则动作ipt_entry_target，进行相应的动作处理。
+函数`ipt_do_table()`实现了规则的遍历，该函数根据传入的参数table和hook找到相应的规则起点，即第一个`ipt_entry`的位置。
+标准匹配通过函数`ipt_packet_match()`来实现，该函数主要对报文的五元组信息进行匹配，扩展匹配通过宏`xt_ematch_foreach`来实现。
+
+在对数据包进行匹配后，接着通过函数`ipt_get_target()`获取规则动作`ipt_entry_target`，进行相应的动作处理。
 
 ### 表、匹配、目标存储及管理机制 
 **struct xt_af xt[]结构数组用于挂载各个协议的match和target。**
@@ -104,10 +105,13 @@ ipt_entry_matchs由多个xt_entry_match组成。
 xt[]是一个一维数组，其按照协议的不同分别存储，目前我们常用的协议主要是IPV4。
 
 *    `xt_register_match(struct xt_match *match)`与`xt_unreginster_match(struct xt_match *match)`
+  
     用于在xt[]数组上挂载或卸载对应协议的match
 *    `xt_register_target(struct xt_target *target)`与`xt_unregister_target(struct xt_target *target)`
+   
     用于在xt[]数组上挂载或卸载对应协议的target
 *    `struct xt_match *xt_find_match()`与`struct xt_target *xt_find_target()`
+
     用于在xt[]数组中查找对应协议的match或target与对应规则相关联，并增加match和target所在模块的引用计数。
 
 **`net->xt.tables[]`网络命名空间协议链表用于将不同协议的表挂载到对应协议链表中。**
