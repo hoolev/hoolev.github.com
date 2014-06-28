@@ -90,7 +90,7 @@ ipt_entry_matchs由多个xt_entry_match组成。
 *   扩展匹配结构(xt_entry_match)，一条规则可以有零个或多个xt_entry_match结构。
 *   规则的动作(xt_entry_target)，一条规则有且只有一个target动作。只有标准匹配和扩展匹配都匹配时才执行target动作。
  
-在ipt_entry中还保存有与遍历规则相关的变量`target_offset和next_offset`，通过`target_offset`可以找到规则中`xt_entry_target`的位置，通过next_offset可以找到下一条规则的位置。
+在`ipt_entry`中还保存有与遍历规则相关的变量`target_offset`和`next_offset`，通过`target_offset`可以找到规则中`xt_entry_target`的位置，通过`next_offset`可以找到下一条规则的位置。
 ![](images/network/rules_storage.jpg)
 
 函数ipt_do_table()实现了规则的遍历，该函数根据传入的参数table和hook找到相应的规则起点，即第一个ipt_entry的位置。
@@ -103,23 +103,29 @@ ipt_entry_matchs由多个xt_entry_match组成。
 
 xt[]是一个一维数组，其按照协议的不同分别存储，目前我们常用的协议主要是IPV4。
 
-*   `xt_register_match(struct xt_match *match)`与`xt_unreginster_match(struct xt_match *match)`
+*    `xt_register_match(struct xt_match *match)`与`xt_unreginster_match(struct xt_match *match)`
     用于在xt[]数组上挂载或卸载对应协议的match
-*   `xt_register_target(struct xt_target *target)`与`xt_unregister_target(struct xt_target *target)`
+*    `xt_register_target(struct xt_target *target)`与`xt_unregister_target(struct xt_target *target)`
     用于在xt[]数组上挂载或卸载对应协议的target
-*   `struct xt_match *xt_find_match()`与`struct xt_target *xt_find_target()`
+*    `struct xt_match *xt_find_match()`与`struct xt_target *xt_find_target()`
     用于在xt[]数组中查找对应协议的match或target与对应规则相关联，并增加match和target所在模块的引用计数。
 
 **`net->xt.tables[]`网络命名空间协议链表用于将不同协议的表挂载到对应协议链表中。**
 
 * `struct xt_table *xt_register_table(struct net *net, const struct xt_table *input_table, struct xt_table_info *bootstrap, struct xt_table_info *newinfo)`
+
   主要是复制`input_table`到table表，并将newinfo（由调用该函数模块提供的私有数据`xt_table_info`)与该表的`table->private`指针相关联，然后根据该表指定的协议挂入对应的`net->xt.table[table->af]`链表中。
+  
 *   `void *xt_unregister_table(struct xt_table *table)`
+
     主要是将table从`net.xt.table[table->af]`链表中取下来，并返回`table->private`指针指向的`xt_table_info`数据。
+    
 *   `struct nf_hook_ops *xt_hook_link(const struct xt_table *table, nf_hookfn *fn)与void xt_hook_unlink(const struct xt_table *table, struct nf_hook_ops *ops)`
+
   主要是利用`xt_table`结构和钩子函数构造出`nf_hook_ops`钩子项，然后调用`nf_register_hooks()`或`nf_unregisgter_hooks()`函数来注册或注销协议对应点的钩子函数。
 
 添加表操作一定要先通过`xt_register_table()`添加一个表，然后再通过`xt_hook_link()`使HOOK能够引用这些表；
+
 删除表操作一定要先通过`xt_hook_unlink()`去掉HOOK对表的引用，然后再通过`xt_unregister_table()`删除一个表。
 
 ## 编写Netfilter target模块 
