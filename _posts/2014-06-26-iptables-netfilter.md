@@ -94,6 +94,7 @@ ipt_entry_matchs由多个xt_entry_match组成。
 ![](images/network/rules_storage.jpg)
 
 函数`ipt_do_table()`实现了规则的遍历，该函数根据传入的参数table和hook找到相应的规则起点，即第一个`ipt_entry`的位置。
+
 标准匹配通过函数`ipt_packet_match()`来实现，该函数主要对报文的五元组信息进行匹配，扩展匹配通过宏`xt_ematch_foreach`来实现。
 
 在对数据包进行匹配后，接着通过函数`ipt_get_target()`获取规则动作`ipt_entry_target`，进行相应的动作处理。
