@@ -58,7 +58,7 @@ iptables是一个工作于用户空间的防火墙应用软件，允许系统管
 11.   进入出去的网络接口。完毕。
 
  **另一种情况是，数据包就是发给本地主机的，那么它会依次穿过：**
- 
+
 7.    进入 mangle 表的 INPUT 链，这里是在路由之后，交由本地主机之前，我们也可以进行一些相应的修改。
 8.    进入 filter 表的 INPUT 链，在这里我们可以对流入的所有数据包进行过滤，无论它来自哪个网络接口。
 9.    交给本地主机的应用程序进行处理。
@@ -82,7 +82,7 @@ ip_tables内核模块是防火墙的核心模块，负责维护防火墙的规�
 通过这些规则实现防火墙的四个核心功能：报文过滤(filter)、地址转换(NAT)、报文处理(mangle)和连接跟踪(conntrack)。
 
 ### 规则的存储和遍历机制 
-规则是顺序存储的,一条规则主要包括三个部分:ipt_entry、ipt_entry_matchs和xt_entry_target。
+规则是顺序存储的,一条规则主要包括三个部分:`ipt_entry`、`ipt_entry_matchs`和`xt_entry_target`。
 
 ipt_entry_matchs由多个xt_entry_match组成。
 
@@ -90,7 +90,7 @@ ipt_entry_matchs由多个xt_entry_match组成。
 *   扩展匹配结构(xt_entry_match)，一条规则可以有零个或多个xt_entry_match结构。
 *   规则的动作(xt_entry_target)，一条规则有且只有一个target动作。只有标准匹配和扩展匹配都匹配时才执行target动作。
  
-在ipt_entry中还保存有与遍历规则相关的变量target_offset和next_offset，通过target_offset可以找到规则中xt_entry_target的位置，通过next_offset可以找到下一条规则的位置。
+在ipt_entry中还保存有与遍历规则相关的变量`target_offset和next_offset`，通过`target_offset`可以找到规则中`xt_entry_target`的位置，通过next_offset可以找到下一条规则的位置。
 ![](images/network/rules_storage.jpg)
 
 函数ipt_do_table()实现了规则的遍历，该函数根据传入的参数table和hook找到相应的规则起点，即第一个ipt_entry的位置。
@@ -103,25 +103,24 @@ ipt_entry_matchs由多个xt_entry_match组成。
 
 xt[]是一个一维数组，其按照协议的不同分别存储，目前我们常用的协议主要是IPV4。
 
-*   xt_register_match(struct xt_match *match)与xt_unreginster_match(struct xt_match *match)
+*   `xt_register_match(struct xt_match *match)`与`xt_unreginster_match(struct xt_match *match)`
     用于在xt[]数组上挂载或卸载对应协议的match
-*   xt_register_target(struct xt_target *target)与xt_unregister_target(struct xt_target *target)
+*   `xt_register_target(struct xt_target *target)`与`xt_unregister_target(struct xt_target *target)`
     用于在xt[]数组上挂载或卸载对应协议的target
-*   struct xt_match *xt_find_match()与struct xt_target *xt_find_target()
+*   `struct xt_match *xt_find_match()`与`struct xt_target *xt_find_target()`
     用于在xt[]数组中查找对应协议的match或target与对应规则相关联，并增加match和target所在模块的引用计数。
 
-**net->xt.tables[]网络命名空间协议链表用于将不同协议的表挂载到对应协议链表中。**
+**`net->xt.tables[]`网络命名空间协议链表用于将不同协议的表挂载到对应协议链表中。**
 
-* struct xt_table *xt_register_table(struct net *net, const struct xt_table *input_table, struct xt_table_info *bootstrap, struct xt_table_info *newinfo)
-  主要是复制input_table到table表，并将newinfo（由调用该函数模块提供的私有数据xt_table_info）与该表的table->private指针相关联，然后根据该表指定的协议挂入对应的net->xt.table[table->af]链表中。
-*   void *xt_unregister_table(struct xt_table *table)
-    主要是将table从net.xt.table[table->af]链表中取下来，并返回table->private指针指向的xt_table_info数据。
-*   struct nf_hook_ops *xt_hook_link(const struct xt_table *table, nf_hookfn *fn)与void xt_hook_unlink(const struct xt_table *table, struct nf_hook_ops *ops)
+* `struct xt_table *xt_register_table(struct net *net, const struct xt_table *input_table, struct xt_table_info *bootstrap, struct xt_table_info *newinfo)`
+  主要是复制`input_table`到table表，并将newinfo（由调用该函数模块提供的私有数据`xt_table_info`)与该表的`table->private`指针相关联，然后根据该表指定的协议挂入对应的`net->xt.table[table->af]`链表中。
+*   `void *xt_unregister_table(struct xt_table *table)`
+    主要是将table从`net.xt.table[table->af]`链表中取下来，并返回`table->private`指针指向的`xt_table_info`数据。
+*   `struct nf_hook_ops *xt_hook_link(const struct xt_table *table, nf_hookfn *fn)与void xt_hook_unlink(const struct xt_table *table, struct nf_hook_ops *ops)`
+  主要是利用`xt_table`结构和钩子函数构造出`nf_hook_ops`钩子项，然后调用`nf_register_hooks()`或`nf_unregisgter_hooks()`函数来注册或注销协议对应点的钩子函数。
 
-  主要是利用xt_table结构和钩子函数构造出nf_hook_ops钩子项，然后调用nf_register_hooks()或nf_unregisgter_hooks()函数来注册或注销协议对应点的钩子函数。
-
-添加表操作一定要先通过xt_register_table()添加一个表，然后再通过xt_hook_link()使HOOK能够引用这些表；
-删除表操作一定要先通过xt_hook_unlink()去掉HOOK对表的引用，然后再通过xt_unregister_table()删除一个表。
+添加表操作一定要先通过`xt_register_table()`添加一个表，然后再通过`xt_hook_link()`使HOOK能够引用这些表；
+删除表操作一定要先通过`xt_hook_unlink()`去掉HOOK对表的引用，然后再通过`xt_unregister_table()`删除一个表。
 
 ## 编写Netfilter target模块 
 Netfilter/iptables框架可以让我们向其中添加功能，要添加功能需要自己写一个内核模块并向这个框架注册。
@@ -142,7 +141,7 @@ iptables -t mangle -A INPUT -p udp -j TEST --action tran
 
 ### 用户态开发 
 iptables库的基本用途就是和用户交互，解析并传送用户输入的参数给内核态程序。
-我们首先初始化xtables_target结构中常用的字段：
+我们首先初始化`xtables_target`结构中常用的字段：
 
 {% highlight c%}
 static struct xtables_target test_target_reg =` 
@@ -169,7 +168,7 @@ static struct xtables_target test_target_reg =`
 *   print用于"iptables -L"显示添加的规则。
 *   extra_opts是struct option类型的结构体，用于将每个参数映射到一个值。
 
-iptables架构能够支持多个共享库，每个共享库需要使用xtables_register_target向iptables注册，这个函数将在模块被iptables加载的时候调用。
+iptables架构能够支持多个共享库，每个共享库需要使用`xtables_register_target`向iptables注册，这个函数将在模块被iptables加载的时候调用。
 
 {% highlight c%}
 void _init(void)
@@ -191,7 +190,7 @@ static void test_print(const void *ip, const struct xt_entry_target *target,int 
 {% endhighlight %}
 
 ### 内核态开发 
-内核态开发的主要工作是实例化一个xt_target对象，然后对其进行必要的初始化设置，最后通过xt_register_target将其注册到net->xt.tables[AF_INET].target全局链表中。我们首先初始化xt_target结构中常用字段：
+内核态开发的主要工作是实例化一个xt_target对象，然后对其进行必要的初始化设置，最后通过xt_register_target将其注册到`net->xt.tables[AF_INET].target`全局链表中。我们首先初始化xt_target结构中常用字段：
 
 {% highlight c %}
 static struct xt_target test_reg  = 
@@ -235,9 +234,9 @@ static unsigned int test_target(struct sk_buff **pskb,
 {% endhighlight %}
 
 ### 总结 
-加载target模块后，net->xt.tables[AF_INET].target链表中就会存储我们的自定义模块TEST。
+加载target模块后，`net->xt.tables[AF_INET].target`链表中就会存储我们的自定义模块TEST。
 
-当用户输入'iptables -t mangle -A INPUT -p udp -j TEST --action tran'命令的时候，用户态的so共享库就会加载，我们实现的parse、final_check函数就会被调用解析用户输入的参数'--action tran'。
+当用户输入`'iptables -t mangle -A INPUT -p udp -j TEST --action tran'`命令的时候，用户态的so共享库就会加载，我们实现的parse、final_check函数就会被调用解析用户输入的参数'--action tran'。
 
 同时Netfilter/iptables框架会把对应的表、链、匹配规则和target模块对应起来，这里对应的表是mangle表、链是INPUT链，匹配规则是UDP报文。
 
