@@ -17,15 +17,12 @@ tags:
 秉着Ubuntu下安装软件不应该如此麻烦的信念，不停的Google，终于找到了另外一种安装VirtualBox增强功能的方法。
 
 使用/opt下的脚本移除已经存在的Guest Additions
-
 `/opt/VBoxGuestAdditions-4.3.6/uninstall.sh`
 
 安装Guest Additions ISO
-
 `sudo apt-get install virtualbox-guest-additions-iso`
 
 开启VirtualBox Guest Service驱动
-
 `software-properties-gtk --open-tab=4`
 ![](/images/tools/wpid-software-properties-gtk-tab4.png)
 
