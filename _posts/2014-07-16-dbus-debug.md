@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用gbus调试DBus 
+title: 使用gdbus调试DBus 
 categories: Linux 
 tags:
     - JuBo
@@ -11,9 +11,10 @@ tags:
 DBus设计了一套面向对象的API，所有的Services的Object函数都以Methond、Signal、Properties的概念对外展现，配合Introspectable API，第三方可以很容易的使用DBus。
 
 > Ubuntu 14.04
+>
 > 以[connman](https://connman.net/)为例
 
-== DBus的启动 ==
+## DBus的启动
 如果DBus和connman没有安装，则使用`sudo apt-get`安装。
 dbus-daemon是一个后台进程，负责消息的转发，在系统启动时通过dbus-launch自动启动。如果需要手动运行，可以查看`man dbus-daemon`。
 一般来说，系统中会有两个dbus-daemon进程，一个属于system bus，一个属于session bus。
@@ -44,7 +45,7 @@ DBUS_SESSION_BUS_PID=10547
 
 获取到值后再执行`export DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-71yAWPQ98j,guid=f12e562709bef04dbeef54ee53c4c720`
 
-== gdbus的使用 ==
+## gdbus的使用
 ** 获取connman的services **
 
 {% highlight sh %}
