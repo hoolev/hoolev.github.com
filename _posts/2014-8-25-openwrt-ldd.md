@@ -27,8 +27,9 @@ Google两个错误，没有发现什么有价值的信息。
 于是猜测可能该版本的ldd命令有问题，不能对共享库使用。
 `openwrt ldd`的搜索结果确定了问题所在，12.09版本的ldd命令存在[Bug](https://dev.openwrt.org/ticket/11482)。
 
-> #11482 closed defect (worksforme)
+> 11482 closed defect (worksforme)
 > ldd and segmentation fault 
+>
 > ldd command on openwrt gives always segmentation failed when executing on library 
 > for example on libmysqlclient.so.16.0.0
 
