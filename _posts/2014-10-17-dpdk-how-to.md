@@ -25,13 +25,14 @@ DPDK是Intel公司发布的数据包转发处理软件库，可以将数据包�
 * kernel = 3.12.8
 * glibc = 2.12
 * gcc = 4.8.2
+
 如果glibc不符合要求(使用ldd --version可以查看glibc版本)，那么最好的建议是换装更新的系统。
 当然如果你是不折腾不舒服斯基，那么也可以考虑升级glibc。
 
 官方给出的quick-start手册中的例子使用的是64位机器，如果你的机器是32位的，那么需要`make config T=i686-native-linuxapp-gcc`。
 
 在编译的过程中，遇到了下面的错误，不知道你会不会遇到。
-> #error "SSSE3 instruction set not enabled"
+> error "SSSE3 instruction set not enabled"
 
 搜索的结果好像跟CPU体系结构有关，在make时增加参数`make TOOLCHAIN_CFLAGS="-msse4"`可以解决该问题。
 
@@ -73,6 +74,7 @@ Network devices using kernel driver
 结果中的第1列是网卡的设备号，第3列是当前使用的驱动，第4列是网卡之前的驱动也就是操作系统使用的网卡驱动。
 
 执行`tools/dpdk_nic_bind.py -u 0000:03:00.1`就可以释放选定的网卡了，不过该网卡此时操心系统还不能使用。
+
 我们还需要把网卡绑定系统使用的驱动`tools/dpdk_nic_bind.py -b igb 0000:03:00.1` ，这样系统就可以使用该网卡了。
 
 
