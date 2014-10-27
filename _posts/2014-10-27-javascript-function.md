@@ -12,7 +12,7 @@ tags:
 所谓的函数声明式就是使用function语句来定义函数：
 
 {% highlight js%}
-function funcname([arg1[,arg2……]]){
+function funcname([args]){
   statements
 }
 {% endhighlight %}
