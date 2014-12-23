@@ -6,7 +6,7 @@ tags:
     - JuBo
     - OpenWrt
 ---
-
+OpenWrt提供了大量的Packages和feeds，通过这些安装包我们可以搭建一个功能齐全的无线路由器。
 不过如果我们想开发一个OpenWrt APP是非常困难的，首先需要搭建一个OpenWrt开发环境，然后需要掌握C/C++语言、学习Linux系统API、了解OpenWrt交叉编译方法，最后通过LuCI添加一个千篇一律的页面。
 我们还能不能愉快的开发？
 
