@@ -6,9 +6,6 @@ tags:
     - JuBo
     - OpenWrt
 ---
-OpenWrt提供了大量的Packages和feeds，通过这些安装包我们可以搭建一个功能齐全的无线路由器。
-不过如果我们想开发一个OpenWrt APP是非常困难的，首先需要搭建一个OpenWrt开发环境，然后需要掌握C/C++语言、学习Linux系统API、了解OpenWrt交叉编译方法，最后通过LuCI添加一个千篇一律的页面。
-我们还能不能愉快的开发？
 
 开源项目JuBo提供了一个极简的OpenWrt APP开发环境，只需要使用JavaScript一种语言就可以完成APP的开发。
 下面我们就使用JuBo来开发一个简单的OpenWrt应用(jubo-shell)，体验下愉悦的OpenWrt应用开发。
@@ -27,7 +24,7 @@ OpenWrt提供了大量的Packages和feeds，通过这些安装包我们可以搭
 jubo-shell.css   # a CSS file to define your app's styles
 jubo-shell.html  # an HTML file that defines view templates
 jubo-shell.js    # a JavaScript file loaded on both client and server
-.meteor          # internal Meteor files 
+.meteor          # internal Meteor files
 {% endhighlight %}
 
 打开浏览器输入`http:/localhost:3000`就可以访问应用了，
@@ -45,17 +42,17 @@ jubo-shell.js    # a JavaScript file loaded on both client and server
 
 {% highlight html %}
   <!-- jubo-shell.html -->
-  <head>                                                                                                                          
+  <head>
     <title>jubo-shell</title>
   </head>
-  
+
   <body>
     <div class="container">
       {% raw %}{{> input}}{% endraw %}
       {% raw %}{{> buffer}}{% endraw %}
     </div>
   </body>
-  
+
   <template name="input">
     <div class="row">
       <div class="input-group">
@@ -66,7 +63,7 @@ jubo-shell.js    # a JavaScript file loaded on both client and server
       </div>
     </div>
   </template>
-  
+
   <template name="buffer">
     <div class="row" id="buffer">
       <pre>{% raw %}{{ output }}{% endraw %}</pre>
@@ -74,7 +71,7 @@ jubo-shell.js    # a JavaScript file loaded on both client and server
   </template>
 {% endhighlight %}
 
-关于文件，  JuBo有以下几条规则： 
+关于文件，  JuBo有以下几条规则：
 
 * 在 /server 文件夹中的代码只会在服务器端运行。
 * 在 /client 文件夹中的代码只会在客户端运行。
@@ -104,9 +101,9 @@ JavaScript文件可以通过`Template.templateName`进行引用。
 
 {% highlight css %}
 /* jubo-shell.css */
-/* CSS declarations go here */ 
+/* CSS declarations go here */
 body {
-  padding-top: 20px; 
+  padding-top: 20px;
 }
 
 #buffer {
@@ -116,7 +113,7 @@ body {
 #cmd {
   font-weight:bold;
   font-size: 1.5em;
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 
 pre {
@@ -138,7 +135,7 @@ Template.buffer.output = function () {
           +"and will print on the screen the output."
           +"\n\n"
           +"Notes: Can't support cd command\n"
-          +"       Max output buffer is 200*1024." 
+          +"       Max output buffer is 200*1024."
 
 }
 
@@ -150,7 +147,7 @@ Template.input.events({
       Session.set('output', data );
     });
   },
-  
+
   'keypress input#cmd': function (evt) {
     if (evt.which === 13) { // enter key
       var cmd  = $('#cmd').val();
@@ -159,7 +156,7 @@ Template.input.events({
         Session.set('output', data );
       });
     }
-  } 
+  }
 });
 {% endhighlight %}
 
@@ -179,7 +176,7 @@ Meteor.methods({
     var shell = new future();
 
     exec(command,function(error,stdout,stderr){
-      if(error) 
+      if(error)
         shell.return('' + error);
       else
         shell.return('' + stdout);
