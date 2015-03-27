@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 为什么无线路由器不是消耗品 
-categories: ByTalk 
+categories: 吐槽
 tags:
     - JuBo
 ---
