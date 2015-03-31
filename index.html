@@ -16,7 +16,7 @@ title: Home
       </a>
     </h1>
     <span class="post-date">{{ post.date | date_to_string }}</span>
-    <span class="post-excerpt">{{ post.excerpt }}</span>
+    {{ post.excerpt }} <a href="{{ post.url }}">(更多...)</a>  
     {% endif %}
   </div>
   {% endfor %}
