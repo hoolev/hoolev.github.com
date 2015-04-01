@@ -19,7 +19,7 @@ RSS(Receive Side Scaling)是一种能够在多处理器系统下使接收报文�
 * 根据RETA中存储的值分发到对应的CPU
 
 下图描述了完整的处理流程：
-[](images/network/rss.png)
+![](/images/network/rss.jpg)
 
 基于RSS技术程序可以通过硬件在多个CPU之间来分发数据流，并且可以通过对RETA的修改来实现动态的负载均衡。
 
