@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 使用RSS提升DPDK应用的性能
-categories: SDN + NFV
+categories: SDN+NFV
 tags:
     - DPDK
 ---

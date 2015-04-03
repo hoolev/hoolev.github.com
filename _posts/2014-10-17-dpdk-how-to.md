@@ -1,7 +1,7 @@
 ---
 layout: post
 title: DPDK HowTo
-categories: Linux
+categories: SDN+NFV
 tags:
     - DPDK
 ---
