@@ -214,7 +214,7 @@ DPDK的内存初始化工作，主要是将hugetlbfs的配置的大内存页，�
 - rte\_eal\_memory\_init
 - rte\_eal\_memzone\_init
 
-### eal_hugepage_info_init
+### eal\_hugepage\_info\_init
 这个函数只有主进程会调用，功能实现比较简单，主要是获取hugetlbfs相关的配置信息：
 
 * 从/sys/kernel/mm/hugepages目录下面读取目录名和文件名，获取系统的hugetlbfs文件系统数，以及每个hugetlbfs的内存面大小。
@@ -223,10 +223,10 @@ DPDK的内存初始化工作，主要是将hugetlbfs的配置的大内存页，�
 
 获取的信息存储在/var/run/.rte\_hugepage\_info
 
-### rte_config_init
+### rte\_config\_init
 这个函数主要是初始化rte\_config，主进程调用rte\_eal\_config\_create，从进程调用rte\_eal\_config\_attach将/var/run/.config文件mmap到自己进程空间的`rte_config.mem_config`结构上，这样主进程和从进程都可以访问这块内存。
 
-### rte_eal_memory_init
+### rte\_eal\_memory\_init
 这个函数的主要功能是初始化hugepage，主进程执行rte\_eal\_hugepage\_init，从进程执行rte\_eal\_hugepage\_attach。
 
 rte\_eal\_hugepage\_init函数是DPDK内存初始化核心函数，DPDK对该函数的注释如下所示，对该函数的分析也从这7个方面展开。
