@@ -1,9 +1,8 @@
 ---
 layout: post
 title: 为什么使用JavaScript开发物联网
-categories: IoT 
+categories: 物联网 
 tags:
-    - IoT 
 	- JavaScript
 ---
 
