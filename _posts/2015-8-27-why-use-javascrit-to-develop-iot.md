@@ -2,9 +2,9 @@
 layout: post
 title: 为什么使用JavaScript开发物联网
 categories: 物联网 
-tags:
-	- JavaScript
+tags: 物联网
 ---
+
 
 嵌入式设备与JavaScript看似是来自两个不同世界的两个物种，八竿子都打不着。但是随着JavaScript 开疆扩土,从浏览器逆袭登陆到服务端之后又与物联网有了交集。
 
