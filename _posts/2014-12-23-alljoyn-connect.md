@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 浅析Alljoyn中设备的发现和连接
-categories: 物联网
+categories: IoT
 tags:
     - Alljoyn
 ---

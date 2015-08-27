@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Alljoyn中实体之间的关系
-categories: 物联网
+categories: IoT
 tags:
     - Alljoyn
 ---
