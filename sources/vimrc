@@ -13,7 +13,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'winmanager'
-Plugin 'vimwiki'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'scrooloose/syntastic'
@@ -86,10 +85,10 @@ autocmd GUIEnter * simalt ~x
 set pastetoggle=<F3>
 
 " 解决菜单乱码，先指定语言。
-set langmenu=zh_CN.UTF-8
-source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/mswin.vim
-language message zh_CN.UTF-8
+"set langmenu=zh_CN.UTF-8
+"source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/mswin.vim
+"language message zh_CN.UTF-8
 set fileencodings=utf-8,GB2312,cp936,gb18030,big5,euc-jp,euc-kr,latin1
  
 " 在处理未保存或只读文件的时候，弹出确认
@@ -197,11 +196,6 @@ filetype indent on      "允许使用indent目录下的文件类型缩进
 " 设置以缩进的方式自动折叠和设置快捷方式
 set foldmethod=indent
  
-" map <F3> zO " 打开折叠
-map <F4> zc " 关闭折叠
-map <F5> zR    " 打开所有折叠
-map <F6> zM    " 关闭所有折叠
- 
 " 定义快捷键的前缀，即<Leader>
 let mapleader = ';'
 
@@ -232,10 +226,6 @@ endfunction
 au BufReadPre *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
 au BufReadPost *.nfo call RestoreFileEncodings()
  
-" 启用自动折叠
-set foldenable
-" 选择以语法高亮为依据进行折叠
-set foldmethod=syntax
 " 用空格键来开关折叠
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
  
@@ -331,45 +321,29 @@ let g:winManagerWindowLayout='FileExplorer|TagList'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              vimwiki                                       "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"多个维基项目的配置
-let g:vimwiki_list = [{'path' : 'D:\iBox\HWiki\',
-			\'path_html' : 'D:\iBox\HWiki_html\',
-			\ 'template_path':  'D:\iBox\templates\',
-			\ 'template_default': 'default',
-			\ 'template_ext': '.tpl',
-			\ 'syntax': 'markdown',
-            \ 'ext': '.md'}]
-let g:vimwiki_camel_case = 0
-
-"标记为完成的checklist项目会有特别的颜色
-let g:vimwiki_hl_cb_checked = 1
-
-"vimwiki菜单配置
-let g:vimwiki_menu = ''
-
-"是否在计算字串长度时用特别考虑中文字符
-let g:vimwiki_CJK_length = 1
-
-"使代码高亮
-let wiki = {}
-let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
-let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,br,hr,div,del,code,red,center,left,right,h4,h5,h6,pre'
-"生成HTML
-map <F10> :Vimwiki2HTML<cr>
-let g:vimwiki_ext2syntax = {'.md':'markdown','.markdown':'markdown','.mdown':'markdown','.mkd':'markdown'}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              YouCompleteMe                                  "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_error_symbol = '>>'
-let g:ycm_warning_symbol = '>*'
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+
+" 使用tab来选择补全
+function! MyTabFunction()
+	let line = getline('.')
+	let substr = strpart(line, -1, col('.')+1)
+	let substr = matchstr(substr, "[^ \t]*$")
+	if strlen(substr) == 0
+		return "\<tab>"
+	endif
+	return pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
+endfunction
+inoremap <tab> <c-r>=MyTabFunction()<cr>
+
 nnoremap <leader>gdl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gdf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nmap <F4> :YcmDiags<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -442,7 +416,7 @@ if has("autocmd")
         autocmd WinEnter * set cursorline cursorcolumn
     else
         autocmd WinLeave * set nocursorline nocursorcolumn
-        autocmd WinEnter * set cursorline nocursorcolumn
+        autocmd WinEnter * set nocursorline nocursorcolumn
     endif
  
     " Enable file type detection.
@@ -461,8 +435,8 @@ if has("autocmd")
     autocmd FileType text set textwidth=78 expandtab softtabstop=4
     autocmd FileType sh set shiftwidth=4 expandtab softtabstop=4
     autocmd FileType php set shiftwidth=4 expandtab softtabstop=4
-    autocmd FileType html set shiftwidth=4 expandtab softtabstop=4
-    autocmd FileType javascript set shiftwidth=4 expandtab softtabstop=4
+    autocmd FileType html set shiftwidth=2 expandtab softtabstop=2
+    autocmd FileType javascript set shiftwidth=2 expandtab softtabstop=2
     autocmd FileType python set shiftwidth=4 expandtab softtabstop=4
     autocmd FileType ruby set shiftwidth=4 expandtab softtabstop=4
     autocmd FileType eruby set shiftwidth=4 expandtab softtabstop=4
