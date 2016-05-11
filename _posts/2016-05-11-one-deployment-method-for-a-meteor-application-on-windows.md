@@ -21,11 +21,13 @@ tags:
 
 ## 发布过程
 
-- 进入需要发布的Meteor应用目录，确认应用能够正常运行
-- 打开`Developer Command Prompt VS2012`，进入需要发布的Meteor应用目录运行`demeteorizer`
-- 进入`.demeteorizer`目录，执行`npm install --registry=https://registry.npm.taobao.org --disturl=https://npm.taobao.org/dist`
-- 执行`npm uninstall bcrypt && npm install bcrypt --registry=https://registry.npm.taobao.org`
-- 新建一个目录，目录名为应用名，目录结构如下：
+1. 进入需要发布的Meteor应用目录，确认应用能够正常运行
+2. 打开`Developer Command Prompt VS2012`，进入需要发布的Meteor应用目录运行`demeteorizer`
+3. 进入`.demeteorizer`目录，执行`npm install --registry=https://registry.npm.taobao.org --disturl=https://npm.taobao.org/dist`
+4. 执行`npm uninstall bcrypt && npm install bcrypt --registry=https://registry.npm.taobao.org`
+5. 新建一个目录，目录名为应用名，目录结构如下：
+6. 
+{% highlight shell%}
 	-/bin
 	--node.exe
 	--mongod.exe
@@ -38,6 +40,7 @@ tags:
 	---/server
 	---/programs
 	---main.js
+{% endhighlight %}
 
 bin目录下的exe和DLL文件从Node、MongoDB的安装目录下拷贝，run64.cmd是程序启动脚本，下面会给出一个模板。
 resources目录由.demeteorizer目录拷贝重命名而来，`/data`目录是新建目录，用来存储应用数据库。
