@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 一个高速数据采集框架 
+title:一个高速数据采集框架 
 categories: 物联网
 tags:
     - ZYNQ 
@@ -14,8 +14,9 @@ tags:
 ## 简介
 该框架主要用于一个基于Xilinx的ZYNQ平台的自动化测试系统，该系统通过FPGA控制ADC/DAC采集原始数据，然后经由CPU简单处理后上传服务器。
 在该系统中FPGA采集数据具有高速，突发的特点，因此CPU必须能够及时的响应并快速处理原始数据，保证采集数据的完整性。
+
 下图简单描述了一个数据采集系统如何从硬件采集原始数据并传输给数据处理系统的过程。
-![](images/iot/monitoring-data-workflow.jpg)
+![](/images/iot/monitoring-data-workflow.jpg)
 
 ## 相关问题及工作
 在描述这个框架怎么实现之前，我们先来说明实现这样一个框架遇到的问题以及解决方法。
