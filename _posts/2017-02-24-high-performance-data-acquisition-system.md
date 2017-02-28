@@ -1,11 +1,11 @@
 ---
 layout: post
-title:一个高速数据采集框架 
+title: 一个高速数据采集框架
 categories: 物联网
 tags:
     - ZYNQ 
     - C
-	- LINUX
+    - LINUX
 ---
 
 数据采集系统必须能够正确处理数据源产生的所有数据，尤其是实时数据采集系统。
